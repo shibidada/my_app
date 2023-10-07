@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import User from "../views/User.vue";
 import Main from "../views/Main.vue";
+import Mall from "../views/Mall.vue";
+import PageOne from "../views/PageOne.vue";
+import PageTwo from "../views/PageTwo.vue";
 
 Vue.use(VueRouter);
 
@@ -15,10 +18,14 @@ const routes = [
   {
     path: "/",
     component: Main,
+    redirect: "/home", //リダイレクト
     children: [
       //サブルート
-      { path: "/home", component: Home },
-      { path: "/user", component: User },
+      { path: "/home", component: Home }, //ホームページ
+      { path: "/user", component: User }, //ユーザー管理
+      { path: "/mall", component: Mall }, //商品管理
+      { path: "/page1", component: PageOne }, //ページ１
+      { path: "/page2", component: PageTwo }, //ページ２
     ],
   },
 ];
