@@ -11,6 +11,7 @@
   >
     <h3>データ管理ポータル</h3>
     <el-menu-item
+      @click="clickMenu(item)"
       v-for="item in noChildern"
       :key="item.name"
       :index="item.name"
@@ -28,7 +29,9 @@
         <span slot="title">{{ item.label }}</span>
       </template>
       <el-menu-item-group v-for="subItem in item.children" :key="subItem.path">
-        <el-menu-item :index="subItem.path">{{ subItem.label }}</el-menu-item>
+        <el-menu-item @click="clickMenu(subItem)" :index="subItem.path">{{
+          subItem.label
+        }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -107,6 +110,11 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    //メニューをクリック
+    clickMenu(item) {
+      console.log(item);
+      this.$router.push(item.path);
     },
   },
   computed: {
