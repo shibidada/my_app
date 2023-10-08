@@ -114,7 +114,14 @@ export default {
     //メニューをクリック
     clickMenu(item) {
       console.log(item);
-      this.$router.push(item.path);
+      //現在のルートと遷移先のルートが違う時にだけ、遷移が起こる
+      if (
+        this.$route.path !== item.path &&
+        !this.$route.path === "/home" &&
+        item.path === "/"
+      ) {
+        this.$router.push(item.path);
+      }
     },
   },
   computed: {
