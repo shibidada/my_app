@@ -9,7 +9,7 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <h3>データ管理ポータル</h3>
+    <h3>{{ isCollapse ? "データ" : "データ管理ポータル" }}</h3>
     <el-menu-item
       @click="clickMenu(item)"
       v-for="item in noChildern"
@@ -58,7 +58,6 @@
 export default {
   data() {
     return {
-      isCollapse: false,
       menuData: [
         {
           path: "/",
@@ -133,6 +132,14 @@ export default {
     hasChildern() {
       return this.menuData.filter((item) => item.children); //childernのあるitemを獲得
     },
+    isCollapse() {
+      return this.$store.state.tab.isCollapse;
+    },
   },
 };
 </script>
+<style lang="less" scoped>
+.el-menu {
+  border-right: none;
+}
+</style>
