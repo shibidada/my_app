@@ -1,7 +1,11 @@
 <template>
   <div class="header-container">
     <div class="l-content">
-      <el-button icon="el-icon-menu" size="mini"></el-button>
+      <el-button
+        @click="handleMenu()"
+        icon="el-icon-menu"
+        size="mini"
+      ></el-button>
       <!-- パンくずリスト -->
       <span class="text">ホームページ</span>
     </div>
@@ -22,6 +26,11 @@
 export default {
   data() {
     return {};
+  },
+  methods: {
+    handleMenu() {
+      this.$store.commit("collapseMenu");
+    },
   },
 };
 </script>
