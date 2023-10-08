@@ -6,7 +6,9 @@
           <common-aside />
         </el-aside>
         <el-container>
-          <el-header>Header</el-header>
+          <el-header>
+            <common-header />
+          </el-header>
           <el-main>
             <!-- ルートアウトレット -->
             <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
@@ -20,12 +22,19 @@
 
 <script>
 import CommonAside from "@/components/CommonAside.vue";
+import CommonHeader from "@/components/CommonHeader.vue";
 export default {
   data() {
     return {};
   },
   components: {
     CommonAside,
+    CommonHeader,
   },
 };
 </script>
+<style scoped>
+.el-header {
+  padding: 0;
+}
+</style>
