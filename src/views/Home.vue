@@ -55,44 +55,7 @@ import { getData } from "../api";
 export default {
   data() {
     return {
-      tableData: [
-        {
-          name: "oppo",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-        {
-          name: "vivo",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-        {
-          name: "Apple",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-        {
-          name: "xiaomi",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-        {
-          name: "Galaxy",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-        {
-          name: "Huawei",
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800,
-        },
-      ],
+      tableData: [],
       tableLabel: {
         name: "ブランド",
         todayBuy: "本日売上",
@@ -140,8 +103,9 @@ export default {
     };
   },
   mounted() {
-    getData().then((data) => {
-      console.log(data);
+    getData().then(({ data }) => {
+      const { tableData } = data.data;
+      this.tableData = tableData;
     });
   },
 };
