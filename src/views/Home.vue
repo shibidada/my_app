@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="7">
+    <el-col :span="7" style="padding-right: 6px">
       <el-card class="box-card">
         <div class="user">
           <img src="../assets/images/usericon.jpeg" alt="" />
@@ -29,7 +29,7 @@
         </el-table>
       </el-card>
     </el-col>
-    <el-col :span="17">
+    <el-col :span="17" style="padding-left: 6px">
       <div class="num">
         <el-card
           v-for="item in countData"
@@ -46,6 +46,13 @@
             <p class="desc">{{ item.name }}</p>
           </div>
         </el-card>
+      </div>
+      <el-card style="height: 280px">
+        <!-- 折れ線グラフ -->
+      </el-card>
+      <div class="graph">
+        <el-card style="height: 260px"></el-card>
+        <el-card style="height: 260px"></el-card>
       </div>
     </el-col>
   </el-row>
@@ -176,6 +183,14 @@ export default {
   .el-card {
     width: 32%;
     margin-bottom: 20px;
+  }
+}
+.graph {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  .el-card {
+    width: 48%;
   }
 }
 </style>
