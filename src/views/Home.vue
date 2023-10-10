@@ -118,7 +118,6 @@ export default {
       const { tableData } = data.data;
       this.tableData = tableData;
 
-      //折れ線グラフ
       //DOMを用意して、echartsのインスタンスを作成
       const echarts1 = echarts.init(this.$refs.echarts1); //this.$refsでDOMを獲得
       //図表の項目とデータを配置
