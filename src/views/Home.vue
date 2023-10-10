@@ -49,6 +49,7 @@
       </div>
       <el-card style="height: 280px">
         <!-- 折れ線グラフ -->
+        <div ref="echarts1" style="height: 280px"></div>
       </el-card>
       <div class="graph">
         <el-card style="height: 260px"></el-card>
@@ -59,6 +60,7 @@
 </template>
 <script>
 import { getData } from "../api";
+import * as echarts from "echarts";
 export default {
   data() {
     return {
@@ -113,6 +115,31 @@ export default {
     getData().then(({ data }) => {
       const { tableData } = data.data;
       this.tableData = tableData;
+
+      //DOMを用意して、echartsのインスタンスを作成
+      const echarts1 = echarts.init(this.$refs.echarts1); //this.$refsでDOMを獲得
+      //図表の項目とデータを配置
+      var echarts1Option = {};
+      //xAxisのデータを配置
+      const { orderData } = data.data;
+      const xAxis = Object.keys(orderData.data[0]);
+      echarts1Option.xAxis = {
+        data: orderData.date,
+      };
+      echarts1Option.yAxis = {};
+      echarts1Option.legend = {
+        data: xAxis,
+      };
+      echarts1Option.series = [];
+      xAxis.forEach((key) => {
+        echarts1Option.series.push({
+          name: key,
+          data: orderData.data.map((item) => item[key]),
+          type: "line",
+        });
+      });
+      //上記配置した項目とデータにより、図表を描写します
+      echarts1.setOption(echarts1Option);
     });
   },
 };
