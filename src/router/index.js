@@ -21,11 +21,11 @@ const routes = [
     redirect: "/home", //リダイレクト
     children: [
       //サブルート
-      { path: "/home", component: Home }, //ホームページ
-      { path: "/user", component: User }, //ユーザー管理
-      { path: "/mall", component: Mall }, //商品管理
-      { path: "/page1", component: PageOne }, //ページ１
-      { path: "/page2", component: PageTwo }, //ページ２
+      { path: "/home", name: "home", component: Home }, //ホームページ
+      { path: "/user", name: "user", component: User }, //ユーザー管理
+      { path: "/mall", name: "mall", component: Mall }, //商品管理
+      { path: "/page1", name: "page1", component: PageOne }, //ページ１
+      { path: "/page2", name: "page2", component: PageTwo }, //ページ２
     ],
   },
 ];

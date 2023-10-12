@@ -9,6 +9,7 @@
           <el-header>
             <common-header />
           </el-header>
+          <common-tag />
           <el-main>
             <!-- ルートアウトレット -->
             <!-- ルートとマッチしたコンポーネントがここへ描画されます -->
@@ -23,6 +24,7 @@
 <script>
 import CommonAside from "@/components/CommonAside.vue";
 import CommonHeader from "@/components/CommonHeader.vue";
+import CommonTag from "@/components/CommonTag.vue";
 export default {
   data() {
     return {};
@@ -30,6 +32,7 @@ export default {
   components: {
     CommonAside,
     CommonHeader,
+    CommonTag,
   },
 };
 </script>
