@@ -62,7 +62,7 @@ export default {
         {
           path: "/",
           name: "home",
-          label: "首页",
+          label: "ホームページ",
           icon: "s-home",
           url: "Home/Home",
         },
@@ -76,12 +76,12 @@ export default {
         {
           path: "/user",
           name: "user",
-          label: "用户管理",
+          label: "ユーザー管理",
           icon: "user",
           url: "UserManage/UserManage",
         },
         {
-          label: "其他",
+          label: "ほか",
           icon: "location",
           children: [
             {
@@ -121,6 +121,7 @@ export default {
       ) {
         this.$router.push(item.path);
       }
+      this.$store.commit("selectMenu", item);
     },
   },
   computed: {
