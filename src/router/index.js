@@ -18,6 +18,7 @@ const routes = [
   {
     path: "/",
     component: Main,
+    name: "Main",
     redirect: "/home", //リダイレクト
     children: [
       //サブルート
