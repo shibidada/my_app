@@ -87,14 +87,14 @@ export default {
             {
               path: "/page1",
               name: "page1",
-              label: "页面1",
+              label: "ページ１",
               icon: "setting",
               url: "Other/PageOne",
             },
             {
               path: "/page2",
               name: "page2",
-              label: "页面2",
+              label: "ページ２",
               icon: "setting",
               url: "Other/PageTwo",
             },
