@@ -28,5 +28,10 @@ export default {
         }
       }
     },
+    //指定したtagのデータを削除するメソッド
+    closeTag(state, item) {
+      const index = state.tabsList.findIndex((val) => val.name === item.name);
+      state.tabsList.splice(index, 1);
+    },
   },
 };
