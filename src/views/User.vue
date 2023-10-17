@@ -57,10 +57,18 @@
       <el-button @click="dialogVisible = true" type="primary">
         ＋　新規
       </el-button>
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column prop="date" label="日期" width="180">
+        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="180">
+        </el-table-column>
+        <el-table-column prop="address" label="地址"> </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
 <script>
+import { getUser } from "../api";
 export default {
   data() {
     return {
@@ -79,6 +87,7 @@ export default {
         birth: [{ required: true, message: "生年月日を選択してください" }],
         addr: [{ required: true, message: "住所を入力してください" }],
       },
+      tableData: [],
     };
   },
   methods: {
@@ -103,6 +112,12 @@ export default {
     cancel() {
       this.handleClose();
     },
+  },
+  mounted() {
+    //ユーザーリストを獲得
+    getUser().then(({ data }) => {
+      console.log(data);
+    });
   },
 };
 </script>
