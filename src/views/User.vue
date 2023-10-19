@@ -55,8 +55,24 @@
       </span>
     </el-dialog>
     <div class="manage-header">
-      <el-button @click="handleAdd" type="primary"> ＋　新規 </el-button>
-      <el-table :data="tableData" style="width: 100%">
+      <el-button style="height: 70%" type="primary" @click="handleAdd">
+        ＋　新規
+      </el-button>
+      <!-- form検索域 -->
+      <el-form :inline="true" :model="userForm">
+        <el-form-item>
+          <el-input
+            placeholder="氏名を入力してください"
+            v-model="userForm.name"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">検索</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="common-table">
+      <el-table stripe height="90%" :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="氏名"> </el-table-column>
         <el-table-column prop="sex" label="性別">
           <template slot-scope="scope">
@@ -82,11 +98,18 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="pager">
+        <el-pagination
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="handlePage"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { del } from "vue";
 import { addUser, getUser, editUser, delUser } from "../api";
 export default {
   data() {
@@ -108,6 +131,14 @@ export default {
       },
       tableData: [],
       modalType: 0, //0:新規ダイアログ　1:編集
+      total: 0, //データの総件数
+      pageData: {
+        page: 1,
+        limit: 10,
+      },
+      userForm: {
+        name: "",
+      },
     };
   },
   methods: {
@@ -182,10 +213,23 @@ export default {
     },
     getList() {
       //ユーザーリストを獲得
-      getUser().then(({ data }) => {
-        console.log(data);
-        this.tableData = data.list;
-      });
+      getUser({ params: { ...this.userForm, ...this.pageData } }).then(
+        ({ data }) => {
+          console.log(data);
+          this.tableData = data.list;
+          this.total = data.count || 0;
+          this.getList();
+        }
+      );
+    },
+    //ページ番号を選ぶ時のコールバック
+    handlePage(val) {
+      // console.log(val, "val");
+      this.pageData.page = val;
+    },
+    //リストの検索
+    onSubmit() {
+      this.getList();
     },
   },
   mounted() {
@@ -193,3 +237,22 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.manage {
+  height: 90%;
+  .manage-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+  .common-table {
+    position: relative;
+    height: calc(100% - 62px);
+    .pager {
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+    }
+  }
+}
+</style>
