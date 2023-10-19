@@ -1,5 +1,6 @@
 <template>
   <el-form
+    ref="form"
     label-width="120px"
     :inline="true"
     class="login-container"
@@ -33,6 +34,7 @@
 <script>
 import Mock from "mockjs";
 import Cookie from "js-cookie";
+import { getMenu } from "../api";
 export default {
   data() {
     return {
@@ -61,12 +63,25 @@ export default {
   methods: {
     //ログイン
     submit() {
-      //token
-      const token = Mock.Random.guid();
-      //tokenの情報をcookieの中に保存して、各画面の間に通信できるようにします
-      Cookie.set("token", token);
-      //ホームページに遷移します
-      this.$router.push("/home");
+      //   //token
+      //   const token = Mock.Random.guid();
+
+      //バリデーション通過
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          getMenu(this.form).then(({ data }) => {
+            console.log(data);
+            if (data.code === 20000) {
+              //tokenの情報をcookieの中に保存して、各画面の間に通信できるようにします
+              Cookie.set("token", data.data.token);
+              //ホームページに遷移します
+              this.$router.push("/home");
+            } else {
+              this.$message.error(data.data.message);
+            }
+          });
+        }
+      });
     },
   },
 };
