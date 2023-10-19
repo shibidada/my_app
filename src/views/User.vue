@@ -28,8 +28,8 @@
         </el-form-item>
         <el-form-item label="性別" prop="sex">
           <el-select v-model="form.sex" placeholder="選択してください">
-            <el-option label="男性" value="1"></el-option>
-            <el-option label="女性" value="0"></el-option>
+            <el-option label="男性" :value="1"></el-option>
+            <el-option label="女性" :value="0"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="生年月日" prop="birth">
@@ -37,6 +37,7 @@
             v-model="form.birth"
             type="date"
             placeholder="生年月日を選択してください"
+            value-format="yyyy-MM-DD"
           >
           </el-date-picker>
         </el-form-item>
@@ -54,15 +55,13 @@
       </span>
     </el-dialog>
     <div class="manage-header">
-      <el-button @click="dialogVisible = true" type="primary">
-        ＋　新規
-      </el-button>
+      <el-button @click="handleAdd" type="primary"> ＋　新規 </el-button>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="氏名"> </el-table-column>
         <el-table-column prop="sex" label="性別">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{
-              scope.row.sex === 1 ? "男性" : "女性"
+              scope.row.sex == 1 ? "男性" : "女性"
             }}</span>
           </template>
         </el-table-column>
@@ -87,7 +86,8 @@
   </div>
 </template>
 <script>
-import { getUser } from "../api";
+import { del } from "vue";
+import { addUser, getUser, editUser, delUser } from "../api";
 export default {
   data() {
     return {
@@ -107,6 +107,7 @@ export default {
         addr: [{ required: true, message: "住所を入力してください" }],
       },
       tableData: [],
+      modalType: 0, //0:新規ダイアログ　1:編集
     };
   },
   methods: {
@@ -115,7 +116,17 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           //引き続き、データを処理
-
+          if (this.modalType === 0) {
+            addUser(this.form).then(() => {
+              //改めてユーザーリストを獲得して更新
+              this.getList();
+            });
+          } else {
+            editUser(this.form).then(() => {
+              //改めてユーザーリストを獲得して更新
+              this.getList();
+            });
+          }
           //入力したデータをリセット
           this.$refs.form.resetFields();
           //ダイアログを閉じる
@@ -131,15 +142,54 @@ export default {
     cancel() {
       this.handleClose();
     },
-    handleEdit(row) {},
-    handleDelete(row) {},
+    handleEdit(row) {
+      this.modalType = 1;
+      this.dialogVisible = true;
+      //注意！該当行のデータをディープコピーすべき。
+      //直接 this.form = row; なら、rowのデータが改ざんされてしまう。
+      this.form = JSON.parse(JSON.stringify(row));
+    },
+    handleDelete(row) {
+      this.$confirm(
+        "この操作はファイルを永久に削除する, 引き続き行いますか?",
+        "注意",
+        {
+          confirmButtonText: "はい",
+          cancelButtonText: "キャンセル",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          delUser({ id: row.id }).then(() => {
+            this.$message({
+              type: "success",
+              message: "削除成功!",
+            });
+            //改めてユーザーリストを獲得して更新
+            this.getList();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "削除を中止しました。",
+          });
+        });
+    },
+    handleAdd() {
+      this.modalType = 0;
+      this.dialogVisible = true;
+    },
+    getList() {
+      //ユーザーリストを獲得
+      getUser().then(({ data }) => {
+        console.log(data);
+        this.tableData = data.list;
+      });
+    },
   },
   mounted() {
-    //ユーザーリストを獲得
-    getUser().then(({ data }) => {
-      console.log(data);
-      this.tableData = data.list;
-    });
+    this.getList();
   },
 };
 </script>
