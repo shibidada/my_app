@@ -21,13 +21,18 @@
       ></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button style="margin-left: 150px; margin-top: 10px" type="primary"
+      <el-button
+        @click="submit"
+        style="margin-left: 150px; margin-top: 10px"
+        type="primary"
         >ログイン</el-button
       >
     </el-form-item>
   </el-form>
 </template>
 <script>
+import Mock from "mockjs";
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
@@ -52,6 +57,17 @@ export default {
         ],
       },
     };
+  },
+  methods: {
+    //ログイン
+    submit() {
+      //token
+      const token = Mock.Random.guid();
+      //tokenの情報をcookieの中に保存して、各画面の間に通信できるようにします
+      Cookie.set("token", token);
+      //ホームページに遷移します
+      this.$router.push("/home");
+    },
   },
 };
 </script>
