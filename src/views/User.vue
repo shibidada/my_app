@@ -58,11 +58,30 @@
         ＋　新規
       </el-button>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180">
+        <el-table-column prop="name" label="氏名"> </el-table-column>
+        <el-table-column prop="sex" label="性別">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{
+              scope.row.sex === 1 ? "男性" : "女性"
+            }}</span>
+          </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
+        <el-table-column prop="age" label="年齢"> </el-table-column>
+        <el-table-column prop="birth" label="生年月日"> </el-table-column>
+        <el-table-column prop="addr" label="住所"> </el-table-column>
+        <el-table-column prop="addr" label="住所">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.row)"
+              >編集</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              >削除</el-button
+            >
+          </template>
         </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
       </el-table>
     </div>
   </div>
@@ -112,11 +131,14 @@ export default {
     cancel() {
       this.handleClose();
     },
+    handleEdit(row) {},
+    handleDelete(row) {},
   },
   mounted() {
     //ユーザーリストを獲得
     getUser().then(({ data }) => {
       console.log(data);
+      this.tableData = data.list;
     });
   },
 };
