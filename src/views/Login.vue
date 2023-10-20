@@ -74,6 +74,10 @@ export default {
             if (data.code === 20000) {
               //tokenの情報をcookieの中に保存して、各画面の間に通信できるようにします
               Cookie.set("token", data.data.token);
+
+              //左側メニューのデータを獲得して、storeの中に保存します
+              this.$store.commit("setMenu", data.data.menu);
+              this.$store.commit("addMenu", this.$router);
               //ホームページに遷移します
               this.$router.push("/home");
             } else {

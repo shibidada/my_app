@@ -45,6 +45,8 @@ export default {
       if (command === "logout") {
         //cookieの中に保存されているtokenをクリアします
         Cookie.remove("token");
+        //cookieの中に保存されているmenuをクリアします
+        Cookie.remove("menu");
         //ログイン画面に遷移します
         this.$router.push("/login");
       }

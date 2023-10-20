@@ -19,15 +19,15 @@ const routes = [
   {
     path: "/",
     component: Main,
-    name: "main",
+    name: "Main",
     redirect: "/home", //リダイレクト
     children: [
-      //サブルート
-      { path: "home", name: "home", component: Home }, //ホームページ
-      { path: "user", name: "user", component: User }, //ユーザー管理
-      { path: "mall", name: "mall", component: Mall }, //商品管理
-      { path: "page1", name: "page1", component: PageOne }, //ページ１
-      { path: "page2", name: "page2", component: PageTwo }, //ページ２
+      // //サブルート
+      // { path: "home", name: "home", component: Home }, //ホームページ
+      // { path: "user", name: "user", component: User }, //ユーザー管理
+      // { path: "mall", name: "mall", component: Mall }, //商品管理
+      // { path: "page1", name: "page1", component: PageOne }, //ページ１
+      // { path: "page2", name: "page2", component: PageTwo }, //ページ２
     ],
   },
   {
