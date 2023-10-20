@@ -55,52 +55,53 @@
 </style>
 
 <script>
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
-      menuData: [
-        {
-          path: "/",
-          name: "home",
-          label: "ホームページ",
-          icon: "s-home",
-          url: "Home/Home",
-        },
-        {
-          path: "/mall",
-          name: "mall",
-          label: "商品管理",
-          icon: "video-play",
-          url: "MallManage/MallManage",
-        },
-        {
-          path: "/user",
-          name: "user",
-          label: "ユーザー管理",
-          icon: "user",
-          url: "UserManage/UserManage",
-        },
-        {
-          label: "ほか",
-          icon: "location",
-          children: [
-            {
-              path: "/page1",
-              name: "page1",
-              label: "ページ１",
-              icon: "setting",
-              url: "Other/PageOne",
-            },
-            {
-              path: "/page2",
-              name: "page2",
-              label: "ページ２",
-              icon: "setting",
-              url: "Other/PageTwo",
-            },
-          ],
-        },
-      ],
+      // menuData: [
+      //   {
+      //     path: "/",
+      //     name: "home",
+      //     label: "ホームページ",
+      //     icon: "s-home",
+      //     url: "Home/Home",
+      //   },
+      //   {
+      //     path: "/mall",
+      //     name: "mall",
+      //     label: "商品管理",
+      //     icon: "video-play",
+      //     url: "MallManage/MallManage",
+      //   },
+      //   {
+      //     path: "/user",
+      //     name: "user",
+      //     label: "ユーザー管理",
+      //     icon: "user",
+      //     url: "UserManage/UserManage",
+      //   },
+      //   {
+      //     label: "ほか",
+      //     icon: "location",
+      //     children: [
+      //       {
+      //         path: "/page1",
+      //         name: "page1",
+      //         label: "ページ１",
+      //         icon: "setting",
+      //         url: "Other/PageOne",
+      //       },
+      //       {
+      //         path: "/page2",
+      //         name: "page2",
+      //         label: "ページ２",
+      //         icon: "setting",
+      //         url: "Other/PageTwo",
+      //       },
+      //     ],
+      //   },
+      // ],
     };
   },
   methods: {
@@ -131,6 +132,10 @@ export default {
     //サブメニューありの場合
     hasChildern() {
       return this.menuData.filter((item) => item.children); //childernのあるitemを獲得
+    },
+    menuData() {
+      //該当データがcookieの中にない場合、storeから獲得します。
+      return JSON.parse(Cookie.get("menu")) || this.$store.state.tab.menu;
     },
     isCollapse() {
       return this.$store.state.tab.isCollapse;
